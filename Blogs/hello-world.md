@@ -10,7 +10,7 @@ draft: false
 Blog is live. Written in Obsidian, photos on Cloudflare R2, built by Astro,
 served from GitHub Pages.
 
-## How a post gets published
+## How a post gets published![hello world 1789337608802](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/hello-world-1789337608802.webp)
 
 1. Write here in Obsidian. Paste photos — they land in `Blogs/assets/`.
 2. Run **Publish Page** (Image Upload Toolkit) — uploads to R2, rewrites links.
