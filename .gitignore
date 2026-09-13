@@ -12,6 +12,11 @@ dist/
 .DS_Store
 *.log
 
+# Pasted photos, pre-upload. R2 is the delivery path; committing these would
+# double storage and serve images from Pages instead. A build failure here
+# (ImageNotFound) means you forgot to run "Publish Page".
+Blogs/assets/
+
 # Local originals — full-size exports never get committed
 Originals/
 *.NEF
