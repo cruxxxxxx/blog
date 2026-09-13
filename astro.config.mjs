@@ -10,7 +10,7 @@ import imgAttrs from './src/lib/img-attrs-plugin.mjs';
 //    SITE = 'https://<username>.github.io'   BASE = '/<repo-name>'
 // Custom domain:
 //    SITE = 'https://example.com'            BASE = '/'
-const SITE = 'https://USERNAME.github.io';
+const SITE = 'https://cruxxxxxx.github.io';
 const BASE = '/blog';
 // ────────────────────────────────────────────────────────────────
 
