@@ -2,6 +2,16 @@
 
 Obsidian vault → Astro → GitHub Pages. Photos on Cloudflare R2.
 
+## First-time setup
+
+Run `./setup.sh`. It installs npm deps, downloads and enables the three
+Obsidian plugins, prompts for your GitHub and Cloudflare R2 details, writes
+the plugin config, and does a test build. Re-runnable — every prompt defaults
+to the current value.
+
+The script is gitignored because it writes credentials; keep a copy if you
+plan to set this up on another machine.
+
 ## Publishing a post
 
 1. **Write** — new note in `Blogs/`. Use `Templates/post.md` for frontmatter.
@@ -39,7 +49,7 @@ coverAlt: Description of the cover photo
 
 - Backend: **Cloudflare R2**
 - Endpoint: `https://<account-id>.r2.cloudflarestorage.com`
-- Path: `blog/{year}/{month}/{filename}`
+- Path: `blog/{year}/{mon}/{filename}` (vars: `{year} {mon} {day} {random} {filename}`)
 - **Update original document: ON** — rewrites the note in place instead of
   copying to clipboard.
 

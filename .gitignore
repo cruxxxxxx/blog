@@ -1,3 +1,6 @@
+# Local setup script — prompts for R2 credentials at runtime.
+setup.sh
+
 # Obsidian — contains plugin credentials (R2 keys). NEVER commit.
 .obsidian/
 .trash/
