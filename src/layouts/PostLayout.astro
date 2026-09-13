@@ -1,0 +1,42 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate, type Post } from '../lib/posts';
+import { href } from '../lib/url';
+
+interface Props {
+  post: Post;
+  prev?: Post;
+  next?: Post;
+}
+
+const { post, prev, next } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, cover, coverAlt, draft } = post.data;
+---
+
+<BaseLayout title={title} description={description} image={cover} type="article">
+  <article class="prose">
+    <header>
+      <h1 class="post-title">{title}</h1>
+      <div class="meta">
+        {draft && <span class="draft-flag">Draft</span>}
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {updatedDate && <span>· updated {formatDate(updatedDate)}</span>}
+        {tags.map((tag) => (
+          <a class="tag" href={href(`/tags/${tag}`)}>{tag}</a>
+        ))}
+      </div>
+    </header>
+
+    <div class="post-body">
+      {cover && <img src={cover} alt={coverAlt} loading="eager" decoding="async" />}
+      <slot />
+    </div>
+
+    {(prev || next) && (
+      <nav class="pagination">
+        {next ? <a href={href(`/${next.id}`)}>← {next.data.title}</a> : <span />}
+        {prev ? <a href={href(`/${prev.id}`)}>{prev.data.title} →</a> : <span />}
+      </nav>
+    )}
+  </article>
+</BaseLayout>

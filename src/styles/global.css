@@ -1,0 +1,140 @@
+:root {
+  --bg: #fbfaf8;
+  --fg: #1a1a18;
+  --muted: #6b6a66;
+  --rule: #e2e0da;
+  --accent: #9a3412;
+  --max: 72ch;
+  --wide: 1100px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121211;
+    --fg: #e8e6e1;
+    --muted: #9a9791;
+    --rule: #2b2a27;
+    --accent: #f0915e;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 17px/1.65 ui-serif, Georgia, 'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--accent); color: var(--accent); }
+
+.wrap { max-width: var(--wide); margin: 0 auto; padding: 0 1.25rem; }
+.prose { max-width: var(--max); margin: 0 auto; }
+
+/* ── header / footer ───────────────────────────────── */
+.site-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  padding: 2rem 0 1.25rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 3rem;
+}
+.site-title {
+  font-size: 1.15rem; font-weight: 600; letter-spacing: .02em;
+  text-decoration: none; margin: 0;
+}
+.site-nav { display: flex; gap: 1.25rem; font-size: .9rem; color: var(--muted); }
+.site-foot {
+  margin-top: 5rem; padding: 2rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  font-size: .85rem; color: var(--muted);
+  display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+
+/* ── index listing ─────────────────────────────────── */
+.post-list { list-style: none; padding: 0; margin: 0; }
+.post-item { padding: 1.75rem 0; border-bottom: 1px solid var(--rule); }
+.post-item:last-child { border-bottom: 0; }
+.post-item h2 { margin: 0 0 .3rem; font-size: 1.4rem; line-height: 1.25; font-weight: 600; }
+.post-item h2 a { text-decoration: none; }
+.post-item p { margin: .4rem 0 0; color: var(--muted); }
+.post-thumb {
+  display: block; width: 100%; height: auto; aspect-ratio: 3 / 2;
+  object-fit: cover; border-radius: 2px; margin-bottom: 1rem;
+  background: var(--rule);
+}
+
+/* ── meta line ─────────────────────────────────────── */
+.meta {
+  font: 400 .82rem/1.5 ui-sans-serif, system-ui, sans-serif;
+  color: var(--muted);
+  letter-spacing: .02em;
+  display: flex; gap: .6rem; flex-wrap: wrap; align-items: center;
+}
+.tag {
+  font-size: .75rem; padding: .1rem .5rem;
+  border: 1px solid var(--rule); border-radius: 999px;
+  text-decoration: none;
+}
+.draft-flag {
+  font: 600 .7rem/1 ui-sans-serif, system-ui, sans-serif;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: var(--bg); background: var(--accent);
+  padding: .25rem .45rem; border-radius: 2px;
+}
+
+/* ── article ───────────────────────────────────────── */
+.post-title { font-size: 2.1rem; line-height: 1.15; margin: 0 0 .6rem; font-weight: 600; }
+.post-body { margin-top: 2.5rem; }
+.post-body h2 { font-size: 1.35rem; margin: 2.5rem 0 .5rem; }
+.post-body h3 { font-size: 1.1rem; margin: 2rem 0 .5rem; }
+.post-body blockquote {
+  margin: 1.5rem 0; padding-left: 1.1rem;
+  border-left: 2px solid var(--accent); color: var(--muted); font-style: italic;
+}
+.post-body code {
+  font: .85em/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--rule); padding: .1em .35em; border-radius: 3px;
+}
+.post-body pre {
+  padding: 1rem; border-radius: 4px; overflow-x: auto;
+  font-size: .85rem; line-height: 1.5;
+}
+.post-body pre code { background: none; padding: 0; }
+.post-body hr { border: 0; border-top: 1px solid var(--rule); margin: 3rem 0; }
+.post-body table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.post-body th, .post-body td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--rule); }
+
+/*
+  Photos break out of the text column. Markdown images from R2 are bare
+  <img> tags, so they get sized here rather than by Astro's image pipeline.
+*/
+.post-body :where(img) {
+  display: block;
+  width: 100vw;
+  max-width: var(--wide);
+  height: auto;
+  margin: 2.5rem calc(50% - 50vw);
+  margin-inline: auto;
+  border-radius: 2px;
+  background: var(--rule);
+}
+@media (min-width: 900px) {
+  .post-body :where(img) {
+    width: var(--wide);
+    margin-inline: calc((var(--max) - var(--wide)) / 2);
+  }
+}
+.post-body :where(p:has(> img:only-child)) { margin: 0; }
+
+.pagination {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
+  font-size: .9rem;
+}

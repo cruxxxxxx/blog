@@ -1,0 +1,15 @@
+# Obsidian — contains plugin credentials (R2 keys). NEVER commit.
+.obsidian/
+.trash/
+
+# Node / Astro
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+
+# Local originals — full-size exports never get committed
+Originals/
+*.NEF
+*.nef

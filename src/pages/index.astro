@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts, formatDate } from '../lib/posts';
+import { href } from '../lib/url';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout>
+  {posts.length === 0 && (
+    <p class="prose">
+      No posts yet. Add a markdown file to <code>Blogs/</code> with
+      <code>title</code> and <code>pubDate</code> frontmatter.
+    </p>
+  )}
+
+  <ul class="post-list prose">
+    {posts.map((post) => (
+      <li class="post-item">
+        {post.data.cover && (
+          <a href={href(`/${post.id}`)}>
+            <img
+              class="post-thumb"
+              src={post.data.cover}
+              alt={post.data.coverAlt}
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+        )}
+        <h2><a href={href(`/${post.id}`)}>{post.data.title}</a></h2>
+        <div class="meta">
+          {post.data.draft && <span class="draft-flag">Draft</span>}
+          <time datetime={post.data.pubDate.toISOString()}>
+            {formatDate(post.data.pubDate)}
+          </time>
+          {post.data.tags.map((tag) => (
+            <a class="tag" href={href(`/tags/${tag}`)}>{tag}</a>
+          ))}
+        </div>
+        {post.data.description && <p>{post.data.description}</p>}
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
