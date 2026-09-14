@@ -61,7 +61,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <body>
     <header class="masthead">
       <h1><a href={href('/')}>{SITE_TITLE}</a></h1>
-      <p class="tagline"><a href="https://hypnotize.works">hypnotize.works</a></p>
       <nav class="navbar">
         <span class="navlinks">
           <a href={href('/')}>home</a>
@@ -76,6 +75,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <main>
       <slot />
     </main>
+
+    <hr />
+    <footer class="site-foot">
+      <a href="https://hypnotize.works">hypnotize.works</a>
+    </footer>
 
     <script is:inline>
       (function () {

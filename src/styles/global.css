@@ -70,12 +70,11 @@ hr {
 /* ── header ────────────────────────────────────────── */
 .masthead h1 {
   font: 700 1.6rem/1.2 var(--mono);
-  margin: 0 0 .25rem;
+  margin: 0 0 .5rem;
   letter-spacing: -.02em;
 }
 .masthead h1 a { color: inherit; text-decoration: none; }
 .masthead h1 a:hover { background: none; text-decoration: underline; }
-.tagline { font: .85rem/1.4 var(--mono); color: var(--muted); margin: 0 0 .75rem; }
 
 .navbar {
   font: .85rem/1.6 var(--mono);
@@ -176,4 +175,9 @@ td.col-name a { text-decoration: underline; }
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+/* ── footer ────────────────────────────────────────── */
+.site-foot {
+  font: .85rem/1.6 var(--mono);
 }
