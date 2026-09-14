@@ -5,7 +5,7 @@ pubDate: 2026-09-13
 tags:
   - travel
 draft: false
-cover:
+cover: https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/portland-1789357663855.webp
 coverAlt: ""
 ---
 stace and i went to portland like 2 weekends ago for my friends', jasmine & mark's, wedding.  we've been suffering at our apartment for the last few months..
@@ -32,6 +32,8 @@ we had a redeye back, so we wondered around to various thirft shops and went to 
 
 overall it was a really nice get away. portland had great weather and some friendly folks. i don't really know what the true vibe was. it seemed like there was a divide between the tourists, locals, and homeless. i'm not really sure what industry is there? just kinda had an odd vibe, but i did like it. so did stace. maybe we'll go back there when we visit seattle sometime.
 
-![[portland-1789357663855.webp]]
-![[portland-1789357654956.webp]]
-![[portland-1789357654959.webp]]![[portland-1789357654957.webp]]
+![portland 1789357654956](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/portland-1789357654956.webp)
+
+![portland 1789357654959](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/portland-1789357654959.webp)
+
+![portland 1789357654957](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/portland-1789357654957.webp)

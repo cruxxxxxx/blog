@@ -13,7 +13,7 @@ const posts = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     // Absolute R2 URL, written by Image Upload Toolkit
-    cover: z.string().url().optional(),
+    cover: z.string().url().nullish(),
     coverAlt: z.string().default(''),
   }),
 });
