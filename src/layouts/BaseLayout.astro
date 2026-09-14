@@ -19,7 +19,6 @@ const {
 
 const pageTitle = title ? `${title} — ${SITE_TITLE}` : SITE_TITLE;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const year = new Date().getFullYear();
 ---
 
 <html lang="en">
@@ -62,7 +61,7 @@ const year = new Date().getFullYear();
   <body>
     <header class="masthead">
       <h1><a href={href('/')}>{SITE_TITLE}</a></h1>
-      <p class="tagline">{SITE_DESCRIPTION}</p>
+      <p class="tagline"><a href="https://hypnotize.works">hypnotize.works</a></p>
       <nav class="navbar">
         <span class="navlinks">
           <a href={href('/')}>home</a>
@@ -77,11 +76,6 @@ const year = new Date().getFullYear();
     <main>
       <slot />
     </main>
-
-    <hr />
-    <footer class="site-foot">
-      <p>{SITE_TITLE} &middot; {year} &middot; shot on a Nikon Zf</p>
-    </footer>
 
     <script is:inline>
       (function () {

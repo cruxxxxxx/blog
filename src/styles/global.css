@@ -177,10 +177,3 @@ td.col-name a { text-decoration: underline; }
   gap: 1rem;
   flex-wrap: wrap;
 }
-
-/* ── footer ────────────────────────────────────────── */
-.site-foot {
-  font: .78rem/1.6 var(--mono);
-  color: var(--muted);
-  margin-top: 2rem;
-}
