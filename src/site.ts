@@ -1,3 +1,3 @@
-export const SITE_TITLE = 'Zero Church';
+export const SITE_TITLE = "Mike's World";
 export const SITE_DESCRIPTION = 'Things to share';
-export const AUTHOR = 'Zero Church';
+export const AUTHOR = 'Mike';

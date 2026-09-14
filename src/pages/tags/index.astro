@@ -10,20 +10,30 @@ for (const post of posts) {
     counts.set(tag, (counts.get(tag) ?? 0) + 1);
   }
 }
-const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const tags = [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
 <BaseLayout title="Tags">
-  <div class="prose">
-    <h1 class="post-title">Tags</h1>
-    {tags.length === 0 ? (
-      <p>No tags yet.</p>
-    ) : (
-      <div class="meta" style="gap:.5rem">
+  <p class="listing-label">Index of /tags &mdash; {tags.length} {tags.length === 1 ? 'entry' : 'entries'}</p>
+
+  {tags.length === 0 ? (
+    <p>No tags yet.</p>
+  ) : (
+    <table class="listing">
+      <thead>
+        <tr>
+          <th class="col-name">Name</th>
+          <th class="col-date">Posts</th>
+        </tr>
+      </thead>
+      <tbody>
         {tags.map(([tag, count]) => (
-          <a class="tag" href={href(`/tags/${tag}`)}>{tag} · {count}</a>
+          <tr>
+            <td class="col-name"><a href={href(`/tags/${tag}`)}>{tag}/</a></td>
+            <td class="col-date">{count}</td>
+          </tr>
         ))}
-      </div>
-    )}
-  </div>
+      </tbody>
+    </table>
+  )}
 </BaseLayout>

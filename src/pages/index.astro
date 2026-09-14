@@ -7,39 +7,42 @@ const posts = await getPublishedPosts();
 ---
 
 <BaseLayout>
-  {posts.length === 0 && (
-    <p class="prose">
-      No posts yet. Add a markdown file to <code>Blogs/</code> with
-      <code>title</code> and <code>pubDate</code> frontmatter.
-    </p>
-  )}
+  <p class="listing-label">Index of / &mdash; {posts.length} {posts.length === 1 ? 'entry' : 'entries'}</p>
 
-  <ul class="post-list prose">
-    {posts.map((post) => (
-      <li class="post-item">
-        {post.data.cover && (
-          <a href={href(`/${post.id}`)}>
-            <img
-              class="post-thumb"
-              src={post.data.cover}
-              alt={post.data.coverAlt}
-              loading="lazy"
-              decoding="async"
-            />
-          </a>
-        )}
-        <h2><a href={href(`/${post.id}`)}>{post.data.title}</a></h2>
-        <div class="meta">
-          {post.data.draft && <span class="draft-flag">Draft</span>}
-          <time datetime={post.data.pubDate.toISOString()}>
-            {formatDate(post.data.pubDate)}
-          </time>
-          {post.data.tags.map((tag) => (
-            <a class="tag" href={href(`/tags/${tag}`)}>{tag}</a>
-          ))}
-        </div>
-        {post.data.description && <p>{post.data.description}</p>}
-      </li>
-    ))}
-  </ul>
+  {posts.length === 0 ? (
+    <p>Empty. Add a markdown file to <code>Blogs/</code>.</p>
+  ) : (
+    <table class="listing">
+      <thead>
+        <tr>
+          <th class="col-name">Name</th>
+          <th class="col-date">Last modified</th>
+          <th class="col-tags">Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        {posts.map((post) => (
+          <tr>
+            <td class="col-name">
+              <a href={href(`/${post.id}`)}>{post.data.title}</a>
+              {post.data.draft && <span class="draft-mark"> [draft]</span>}
+            </td>
+            <td class="col-date">
+              {formatDate(post.data.updatedDate ?? post.data.pubDate)}
+            </td>
+            <td class="col-tags">
+              {post.data.tags.length === 0
+                ? '-'
+                : post.data.tags.map((tag, i) => (
+                    <>
+                      {i > 0 && ', '}
+                      <a href={href(`/tags/${tag}`)}>{tag}</a>
+                    </>
+                  ))}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
 </BaseLayout>

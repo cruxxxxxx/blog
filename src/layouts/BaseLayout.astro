@@ -43,27 +43,87 @@ const year = new Date().getFullYear();
     <meta property="og:url" content={canonical} />
     {image && <meta property="og:image" content={image} />}
     <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+
+    {/* Runs before first paint so an explicit choice never flashes the wrong theme. */}
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          if (saved === 'light' || saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', saved);
+          }
+        } catch (e) {
+          /* private mode: fall through to the system preference */
+        }
+      })();
+    </script>
   </head>
 
   <body>
-    <div class="wrap">
-      <header class="site-head">
-        <a class="site-title" href={href('/')}>{SITE_TITLE}</a>
-        <nav class="site-nav">
-          <a href={href('/')}>Posts</a>
-          <a href={href('/tags')}>Tags</a>
-          <a href={href('/rss.xml')}>RSS</a>
-        </nav>
-      </header>
+    <header class="masthead">
+      <h1><a href={href('/')}>{SITE_TITLE}</a></h1>
+      <p class="tagline">{SITE_DESCRIPTION}</p>
+      <nav class="navbar">
+        <span class="navlinks">
+          <a href={href('/')}>home</a>
+          <a href={href('/tags')}>tags</a>
+          <a href={href('/rss.xml')}>rss</a>
+        </span>
+        <button id="theme-toggle" type="button" aria-live="polite">theme: auto</button>
+      </nav>
+      <hr />
+    </header>
 
-      <main>
-        <slot />
-      </main>
+    <main>
+      <slot />
+    </main>
 
-      <footer class="site-foot">
-        <span>© {year} {SITE_TITLE}</span>
-        <span>Shot on Nikon Zf · Built with Astro</span>
-      </footer>
-    </div>
+    <hr />
+    <footer class="site-foot">
+      <p>{SITE_TITLE} &middot; {year} &middot; shot on a Nikon Zf</p>
+    </footer>
+
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+
+        // auto -> light -> dark -> auto
+        var ORDER = ['auto', 'light', 'dark'];
+
+        function read() {
+          try {
+            var v = localStorage.getItem('theme');
+            return v === 'light' || v === 'dark' ? v : 'auto';
+          } catch (e) {
+            return 'auto';
+          }
+        }
+
+        function apply(mode) {
+          if (mode === 'auto') {
+            document.documentElement.removeAttribute('data-theme');
+          } else {
+            document.documentElement.setAttribute('data-theme', mode);
+          }
+          btn.textContent = 'theme: ' + mode;
+          try {
+            if (mode === 'auto') {
+              localStorage.removeItem('theme');
+            } else {
+              localStorage.setItem('theme', mode);
+            }
+          } catch (e) {
+            /* choice just will not persist */
+          }
+        }
+
+        apply(read());
+
+        btn.addEventListener('click', function () {
+          apply(ORDER[(ORDER.indexOf(read()) + 1) % ORDER.length]);
+        });
+      })();
+    </script>
   </body>
 </html>

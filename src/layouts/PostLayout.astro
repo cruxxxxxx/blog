@@ -14,17 +14,24 @@ const { title, description, pubDate, updatedDate, tags, cover, coverAlt, draft }
 ---
 
 <BaseLayout title={title} description={description} image={cover} type="article">
-  <article class="prose">
-    <header>
-      <h1 class="post-title">{title}</h1>
-      <div class="meta">
-        {draft && <span class="draft-flag">Draft</span>}
+  <article>
+    <header class="post-head">
+      <h1>{title}{draft && <span class="draft-mark"> [draft]</span>}</h1>
+      <p class="byline">
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
-        {updatedDate && <span>· updated {formatDate(updatedDate)}</span>}
-        {tags.map((tag) => (
-          <a class="tag" href={href(`/tags/${tag}`)}>{tag}</a>
-        ))}
-      </div>
+        {updatedDate && <> &middot; updated {formatDate(updatedDate)}</>}
+        {tags.length > 0 && (
+          <>
+            {' '}&middot;{' '}
+            {tags.map((tag, i) => (
+              <>
+                {i > 0 && ', '}
+                <a href={href(`/tags/${tag}`)}>{tag}</a>
+              </>
+            ))}
+          </>
+        )}
+      </p>
     </header>
 
     <div class="post-body">
@@ -32,11 +39,10 @@ const { title, description, pubDate, updatedDate, tags, cover, coverAlt, draft }
       <slot />
     </div>
 
-    {(prev || next) && (
-      <nav class="pagination">
-        {next ? <a href={href(`/${next.id}`)}>← {next.data.title}</a> : <span />}
-        {prev ? <a href={href(`/${prev.id}`)}>{prev.data.title} →</a> : <span />}
-      </nav>
-    )}
+    <hr />
+    <nav class="pager">
+      {next ? <a href={href(`/${next.id}`)}>&larr; {next.data.title}</a> : <span>&nbsp;</span>}
+      {prev ? <a href={href(`/${prev.id}`)}>{prev.data.title} &rarr;</a> : <span>&nbsp;</span>}
+    </nav>
   </article>
 </BaseLayout>

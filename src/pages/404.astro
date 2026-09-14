@@ -3,9 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { href } from '../lib/url';
 ---
 
-<BaseLayout title="Not found">
-  <div class="prose">
-    <h1 class="post-title">404</h1>
-    <p>That page does not exist. <a href={href('/')}>Back to posts</a>.</p>
-  </div>
+<BaseLayout title="404">
+  <p class="listing-label">404 &mdash; not found</p>
+  <p>No such file or directory. <a href={href('/')}>Back to index</a>.</p>
 </BaseLayout>

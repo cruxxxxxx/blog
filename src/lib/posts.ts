@@ -10,11 +10,7 @@ export async function getPublishedPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
+/** ISO-ish, to match the directory-listing look. */
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
+  return date.toISOString().slice(0, 10);
 }

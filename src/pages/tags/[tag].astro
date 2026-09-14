@@ -20,21 +20,26 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props;
 ---
 
-<BaseLayout title={`#${tag}`}>
-  <div class="prose">
-    <h1 class="post-title">#{tag}</h1>
-    <ul class="post-list">
+<BaseLayout title={tag}>
+  <p class="listing-label">
+    Index of /tags/{tag} &mdash; {posts.length} {posts.length === 1 ? 'entry' : 'entries'}
+    &middot; <a href={href('/tags')}>parent directory</a>
+  </p>
+
+  <table class="listing">
+    <thead>
+      <tr>
+        <th class="col-name">Name</th>
+        <th class="col-date">Last modified</th>
+      </tr>
+    </thead>
+    <tbody>
       {posts.map((post) => (
-        <li class="post-item">
-          <h2><a href={href(`/${post.id}`)}>{post.data.title}</a></h2>
-          <div class="meta">
-            <time datetime={post.data.pubDate.toISOString()}>
-              {formatDate(post.data.pubDate)}
-            </time>
-          </div>
-          {post.data.description && <p>{post.data.description}</p>}
-        </li>
+        <tr>
+          <td class="col-name"><a href={href(`/${post.id}`)}>{post.data.title}</a></td>
+          <td class="col-date">{formatDate(post.data.updatedDate ?? post.data.pubDate)}</td>
+        </tr>
       ))}
-    </ul>
-  </div>
+    </tbody>
+  </table>
 </BaseLayout>
