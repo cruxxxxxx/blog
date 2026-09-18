@@ -4,7 +4,7 @@ description: ""
 pubDate: 2026-09-18
 tags: []
 draft: false
-cover: "[](assets/melt-banana%20&%20hosono-1789746580318.webp)"
+cover: https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/melt-banana%20%26%20hosono-1789746580318.webp
 coverAlt: ""
 ---
 ![melt banana & hosono 1789746580318](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/melt-banana%20%26%20hosono-1789746580318.webp)
