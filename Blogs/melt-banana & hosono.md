@@ -1,5 +1,5 @@
 ---
-title: japan in nyc
+title: melt-banana & hosono
 description: ""
 pubDate: 2026-09-18
 tags: []
@@ -7,8 +7,6 @@ draft: false
 cover: https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/melt-banana%20%26%20hosono-1789746580318.webp
 coverAlt: ""
 ---
-![melt banana & hosono 1789746580318](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/melt-banana%20%26%20hosono-1789746580318.webp)
-
 living in nyc is wonderful because everyone loves it. eventually, everyone will come to visit you, and realistically, you never have to leave (unless we all get displaced by rising rents). 
 
 it seems like a lot of musicians prefer to tour in the fall, so i was checking out who is playing and saw melt-banana were back in town. i saw them in 2024 and it was great. the openers, the flying luttenbachers, were really impressive musicians. the band leader 'weasel' had this snide energy that spoke to me. and melt-banana just fuckin rocked it. last time i went, i made the conscious decision NOT to wear ear plugs so i could feel the music raw. well, that was really really dumb. i had experienced some dull ear pain after seeing loud acts before, like boris in 2022, but this was a sharp pain that lasted 3 days and bad tinitus. i know 80 year old mike is going to remember what moment to blame when i have the tv volume maxed out. 
