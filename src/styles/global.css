@@ -144,9 +144,10 @@ td.col-name a { text-decoration: underline; }
   margin: 1.25rem 0;
   border: 1px solid var(--rule);
 }
-/* Poster frames are 1280px wide; without this a short clip renders at the
-   intrinsic video size and ignores the column. */
-.post-body video { width: 100%; background: #000; }
+/* A video with no width sizes itself from the poster frame, same as an image
+   sizes from the file — so both sit at natural size and only shrink when they
+   are wider than the column. `![alt|400]` or `![alt|60%]` overrides either. */
+.post-body video { background: #000; }
 .post-body blockquote {
   margin: 1rem 0 1rem 1rem;
   padding-left: .75rem;

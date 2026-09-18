@@ -1,4 +1,5 @@
 import rss from '@astrojs/rss';
+import { previewImageFor } from '../lib/media.mjs';
 import { getPublishedPosts } from '../lib/posts';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../site';
 
@@ -16,7 +17,7 @@ export async function GET(context) {
       link: `/${post.id}`,
       ...(post.data.cover && {
         enclosure: {
-          url: post.data.cover,
+          url: previewImageFor(post.data.cover),
           type: 'image/webp',
           length: 0,
         },

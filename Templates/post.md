@@ -6,5 +6,6 @@ tags: []
 draft: true
 cover:
 coverAlt: ""
+coverWidth:
 ---
 

@@ -6,6 +6,7 @@ tags: []
 draft: false
 cover: https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/melt-banana%20%26%20hosono-1789746580318.webp
 coverAlt: ""
+coverWidth: 50%
 ---
 living in nyc is wonderful because everyone loves it. eventually, everyone will come to visit you, and realistically, you never have to leave (unless we all get displaced by rising rents). 
 
@@ -17,7 +18,7 @@ the most memorable moment was when YAKO called for us to give 'spirit hands' to 
 
 <video src="https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/file-2026-09-18-114957-015693ed.mp4"
        poster="https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/file-2026-09-18-114957-015693ed-poster.webp"
-       controls preload="none" playsinline></video>
+       controls preload="none" playsinline style="width:60%"></video>
 
 --------
 
@@ -37,6 +38,6 @@ hosono came on and the band explained he had a pace maker put in, and that he di
 
 <video src="https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/file-2026-09-18-115012-8faaf296.mp4"
        poster="https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/file-2026-09-18-115012-8faaf296-poster.webp"
-       controls preload="none" playsinline></video>
+       controls preload="none" playsinline style="width:60%"></video>
 
 after the show, we parted ways and me and stace stopped in times sq for a slice of pizza so stace could use the bathroom. the train ride home was packed, but surprisingly easy, and it was nice to share that moment with stace. we sat on the floor when we got home and ate pizza before bed. 
