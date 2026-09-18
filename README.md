@@ -18,7 +18,57 @@ plan to set this up on another machine.
 2. **Photos** — paste into the note. They land in `Blogs/assets/`.
 3. **Upload** — command palette → **Publish Page** (Image Upload Toolkit).
    Uploads to R2 and rewrites the links to absolute URLs.
-4. **Ship** — set `draft: false`, commit, push. Actions builds and deploys.
+4. **Videos** — paste, then command palette → **Upload editor attachments**
+   (Attachment Uploader). See below.
+5. **Ship** — set `draft: false`, commit, push. Actions builds and deploys.
+
+## Videos
+
+Image Upload Toolkit only knows about image formats, so videos go through a
+second plugin, **Attachment Uploader**, configured to hand every `.mp4 .mov
+.m4v .webm .avi .mkv` in the note to `bin/r2-media.sh`. That script:
+
+- re-encodes with ffmpeg — H.264, max 1280px wide, CRF 26, AAC 128k,
+  `+faststart` so playback starts before the file finishes downloading
+- strips all metadata (`-map_metadata -1`), which covers GPS
+- grabs a WebP poster frame at 0.5s
+- uploads both to `blog/{year}/{mon}/` in the same bucket, named
+  `<slug>-<content hash>.mp4` and `<slug>-<content hash>-poster.webp`
+- prints the public URL, which the plugin writes back into the note
+
+R2 credentials are read at runtime from the Image Upload Toolkit config, so
+they live in exactly one (gitignored) place.
+
+The note ends up with an HTML `<video>` tag, so the clip keeps playing inline
+in Obsidian and renders the same on the site:
+
+```html
+<video src="https://<r2-host>/blog/2026/09/walk-ab12cd34.mp4"
+       poster="https://<r2-host>/blog/2026/09/walk-ab12cd34-poster.webp"
+       controls preload="none" playsinline></video>
+```
+
+That needs a patch: the plugin ships rewriting non-images to `[name](url)`, a
+plain link with no player, and Obsidian will not embed a remote video through
+`![](url.mp4)` either — markdown embeds of external media only work for
+images. `bin/patch-attachment-uploader.mjs` applies the change and is a no-op
+when already applied. **Re-run it after every plugin update**, or videos go
+back to being dead links:
+
+```
+node bin/patch-attachment-uploader.mjs
+```
+
+`src/lib/img-attrs-plugin.mjs` is the safety net: any leftover link or image
+pointing at a video extension still renders as a `<video>` with a derived
+poster.
+
+Originals stay in `Blogs/assets/` (gitignored). Set **Delete original after
+upload** in the plugin settings if you would rather they did not.
+
+Tunables are at the top of `bin/r2-media.sh`: `MAX_WIDTH`, `CRF`,
+`AUDIO_BITRATE`. Higher CRF = smaller and worse; 23 is near-transparent, 28 is
+visibly soft on detailed footage.
 
 Drafts render in `npm run dev` and are excluded from the production build.
 
