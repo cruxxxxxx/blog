@@ -2,7 +2,8 @@
 title: melt-banana & hosono
 description: ""
 pubDate: 2026-09-18
-tags: []
+tags:
+  - blog
 draft: false
 cover: https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/melt-banana%20%26%20hosono-1789746580318.webp
 coverAlt: ""

@@ -3,7 +3,7 @@ title: portland
 description: ""
 pubDate: 2026-09-13
 tags:
-  - travel
+  - blog
 draft: false
 cover: https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/09/portland-1789357663855.webp
 coverAlt: ""

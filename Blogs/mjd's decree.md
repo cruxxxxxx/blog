@@ -2,8 +2,9 @@
 title: Untitled
 description: ""
 pubDate: 2026-09-18
-tags: []
-draft: true
+tags:
+  - random
+draft: false
 coverAlt: ""
 coverWidth:
 ---
