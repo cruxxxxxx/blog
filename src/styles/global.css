@@ -1,188 +1,170 @@
 /*
-  Plain directory-listing look: system fonts, default link colours, rules
-  instead of cards. Nothing here should feel designed.
+  hypnotize.works/blog — quiet, photo-first. Small plain sans text in a narrow
+  left column, photos at full column width, lots of white. The stamped logo
+  and the dotted `arrayregular` titles (declared in BaseLayout so the font URL
+  follows the site base) tie it back to hypnotize.works.
 */
 
 :root {
   --bg: #ffffff;
   --fg: #000000;
-  --muted: #555555;
-  --rule: #bbbbbb;
-  --link: #0000ee;
-  --visited: #551a8b;
-  --mark: #ffff99;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Courier New", monospace;
-  --serif: Times, "Times New Roman", Georgia, serif;
-  color-scheme: light;
-}
-
-/* System preference, unless the reader has explicitly chosen light. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e0e0e;
-    --fg: #d8d8d8;
-    --muted: #8f8f8f;
-    --rule: #3a3a3a;
-    --link: #8ab4ff;
-    --visited: #c9a0ff;
-    --mark: #5a4a00;
-    color-scheme: dark;
-  }
-}
-
-/* Explicit choice always wins, in both directions. */
-:root[data-theme="dark"] {
-  --bg: #0e0e0e;
-  --fg: #d8d8d8;
-  --muted: #8f8f8f;
-  --rule: #3a3a3a;
-  --link: #8ab4ff;
-  --visited: #c9a0ff;
-  --mark: #5a4a00;
-  color-scheme: dark;
-}
-
-:root[data-theme="light"] {
+  --muted: #8a8a8a;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --display: 'arrayregular', var(--sans);
+  --column: 34rem;
+  --gutter-left: 4.5rem;
   color-scheme: light;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  margin: 0 auto;
-  max-width: 46rem;
-  padding: 1.5rem 1rem 4rem;
+  margin: 0;
+  padding: 1.25rem 1rem 5rem var(--gutter-left);
   background: var(--bg);
   color: var(--fg);
-  font: 16px/1.5 var(--serif);
+  font: 13px/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--link); }
-a:visited { color: var(--visited); }
-a:hover { background: var(--mark); color: var(--fg); }
-
-hr {
-  border: 0;
-  border-top: 1px solid var(--rule);
-  margin: 1rem 0;
+main,
+.site-foot {
+  max-width: var(--column);
 }
 
-/* ── header ────────────────────────────────────────── */
-.masthead h1 {
-  font: 700 1.6rem/1.2 var(--mono);
-  margin: 0 0 .5rem;
-  letter-spacing: -.02em;
-}
-.masthead h1 a { color: inherit; text-decoration: none; }
-.masthead h1 a:hover { background: none; text-decoration: underline; }
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-.navbar {
-  font: .85rem/1.6 var(--mono);
+/* ── header: small stamped logo, top left ──────────── */
+.masthead {
   display: flex;
-  flex-wrap: wrap;
-  gap: .75rem;
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 0 0 4.5rem calc(-1 * var(--gutter-left) + 1.25rem);
 }
-.navlinks { display: flex; gap: .75rem; flex-wrap: wrap; }
+.masthead .logo img {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+.masthead .logo:hover { opacity: .6; }
+.blog-name {
+  font: 1.6rem/1 var(--display);
+  padding-bottom: .1rem;
+}
+.blog-name:hover { text-decoration: none; opacity: .6; }
 
-#theme-toggle {
-  font: inherit;
-  font-family: var(--mono);
-  color: var(--link);
-  background: none;
-  border: 0;
+/* ── lists ─────────────────────────────────────────── */
+.post-list,
+.tag-list {
+  list-style: none;
+  margin: 0;
   padding: 0;
-  cursor: pointer;
-  text-decoration: underline;
 }
-#theme-toggle:hover { background: var(--mark); color: var(--fg); }
+.post-list li { margin: 0 0 2.25rem; }
+.post-list a { display: block; }
+.post-list a:hover { text-decoration: none; }
+.post-list a:hover .post-list-title { opacity: .6; }
+.post-list .date { display: block; margin-bottom: .2rem; }
+.post-list-title {
+  display: block;
+  font: 2.2rem/1.05 var(--display);
+  overflow-wrap: anywhere;
+}
 
-/* ── directory listing ─────────────────────────────── */
-.listing-label { font: .85rem/1.6 var(--mono); color: var(--muted); margin: 1rem 0 .25rem; }
+.tag-list li { margin: 0 0 1rem; }
+.count,
+.draft-mark,
+.updated { color: var(--muted); }
 
-table.listing {
-  width: 100%;
-  border-collapse: collapse;
-  font: .85rem/1.7 var(--mono);
-}
-table.listing th {
-  text-align: left;
-  font-weight: 700;
-  padding: .1rem .75rem .1rem 0;
-  border-bottom: 1px solid var(--rule);
-  white-space: nowrap;
-}
-table.listing td {
-  padding: .1rem .75rem .1rem 0;
-  vertical-align: top;
-}
-table.listing tr:last-child td { padding-bottom: .4rem; }
-td.col-date, th.col-date { white-space: nowrap; color: var(--muted); }
-td.col-tags, th.col-tags { color: var(--muted); }
-td.col-name a { text-decoration: underline; }
-
-.draft-mark { color: var(--muted); }
+.page-label { margin: 0 0 2.5rem; }
+.note { margin: 0; }
 
 /* ── article ───────────────────────────────────────── */
+.post-head { margin-bottom: 2.5rem; }
+.post-head .date { display: block; margin-bottom: 1.25rem; }
 .post-head h1 {
-  font: 700 1.35rem/1.3 var(--mono);
-  margin: 1rem 0 .25rem;
+  font: 2.8rem/1.05 var(--display);
+  margin: 0;
+  overflow-wrap: anywhere;
 }
-.byline { font: .8rem/1.6 var(--mono); color: var(--muted); margin: 0; }
-.byline a { color: var(--link); }
+.post-description { margin: 1.25rem 0 0; }
 
-.post-body { margin-top: 1.25rem; }
-.post-body h2 { font: 700 1.1rem/1.3 var(--mono); margin: 2rem 0 .4rem; }
-.post-body h3 { font: 700 .95rem/1.3 var(--mono); margin: 1.5rem 0 .4rem; }
-.post-body p { margin: 0 0 1rem; }
+.post-body h2,
+.post-body h3 {
+  font: 1.6rem/1.1 var(--display);
+  margin: 2.5rem 0 .75rem;
+}
+.post-body h3 { font-size: 1.25rem; }
+.post-body p { margin: 0 0 1.25rem; }
+
+/* Photos fill the column unless a size was given (`![alt|400]`, `|60%`),
+   in which case they keep it and only shrink to fit. */
 .post-body img,
 .post-body video {
   display: block;
   max-width: 100%;
   height: auto;
-  margin: 1.25rem 0;
-  border: 1px solid var(--rule);
+  margin: 2rem 0;
 }
-/* A video with no width sizes itself from the poster frame, same as an image
-   sizes from the file — so both sit at natural size and only shrink when they
-   are wider than the column. `![alt|400]` or `![alt|60%]` overrides either. */
+.post-body img:not([width]):not([style]),
+.post-body video:not([width]):not([style]) {
+  width: 100%;
+}
 .post-body video { background: #000; }
+
 .post-body blockquote {
-  margin: 1rem 0 1rem 1rem;
-  padding-left: .75rem;
-  border-left: 2px solid var(--rule);
-  color: var(--muted);
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 1px solid var(--fg);
 }
 .post-body code {
-  font: .85em/1.5 var(--mono);
-  background: color-mix(in srgb, var(--fg) 8%, transparent);
+  font: .9em/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #f2f2f2;
   padding: .05em .3em;
 }
 .post-body pre {
-  font-size: .8rem;
   padding: .75rem;
   overflow-x: auto;
-  border: 1px solid var(--rule);
+  background: #f2f2f2;
 }
 .post-body pre code { background: none; padding: 0; }
-.post-body table { border-collapse: collapse; font-size: .9rem; width: 100%; }
-.post-body th, .post-body td {
-  border: 1px solid var(--rule);
-  padding: .3rem .5rem;
+.post-body table { border-collapse: collapse; width: 100%; }
+.post-body th,
+.post-body td {
+  border-bottom: 1px solid #ddd;
+  padding: .3rem .5rem .3rem 0;
   text-align: left;
 }
-.post-body ul, .post-body ol { padding-left: 1.5rem; }
+.post-body ul,
+.post-body ol { padding-left: 1.25rem; }
+.post-body a { text-decoration: underline; }
+
+.post-foot { margin-top: 3rem; }
+.post-tags { display: flex; flex-wrap: wrap; gap: .75rem; margin: 0 0 .5rem; }
+.post-tags a::before { content: '#'; }
 
 .pager {
-  font: .8rem/1.7 var(--mono);
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  flex-wrap: wrap;
+  margin-top: 3rem;
 }
 
 /* ── footer ────────────────────────────────────────── */
 .site-foot {
-  font: .85rem/1.6 var(--mono);
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 6rem;
+  color: var(--muted);
+}
+
+/* ── phones ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --gutter-left: 1rem; }
+
+  .masthead { margin-left: 0; margin-bottom: 3.5rem; }
+  .masthead .logo img { height: 36px; }
+  .post-list-title { font-size: 1.9rem; }
+  .post-head h1 { font-size: 2.3rem; }
 }

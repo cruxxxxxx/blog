@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts, formatDate, type Post } from '../../lib/posts';
+import PostList from '../../components/PostList.astro';
+import { getPublishedPosts, type Post } from '../../lib/posts';
 import { href } from '../../lib/url';
 
 export async function getStaticPaths() {
@@ -21,25 +22,6 @@ const { tag, posts } = Astro.props;
 ---
 
 <BaseLayout title={tag}>
-  <p class="listing-label">
-    Index of /tags/{tag} &mdash; {posts.length} {posts.length === 1 ? 'entry' : 'entries'}
-    &middot; <a href={href('/tags')}>parent directory</a>
-  </p>
-
-  <table class="listing">
-    <thead>
-      <tr>
-        <th class="col-name">Name</th>
-        <th class="col-date">Last modified</th>
-      </tr>
-    </thead>
-    <tbody>
-      {posts.map((post) => (
-        <tr>
-          <td class="col-name"><a href={href(`/${post.id}`)}>{post.data.title}</a></td>
-          <td class="col-date">{formatDate(post.data.updatedDate ?? post.data.pubDate)}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+  <p class="page-label"><a href={href('/tags')}>tags</a> / {tag}</p>
+  <PostList posts={posts} />
 </BaseLayout>

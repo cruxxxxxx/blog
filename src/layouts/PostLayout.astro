@@ -1,6 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { formatDate, type Post } from '../lib/posts';
+import { formatMonthYear, type Post } from '../lib/posts';
 import { href } from '../lib/url';
 import { isVideoUrl, posterUrlFor, previewImageFor, sizeProperties } from '../lib/media.mjs';
 
@@ -21,22 +21,9 @@ const coverSize = sizeProperties(coverWidth);
 <BaseLayout title={title} description={description} image={previewImageFor(cover)} type="article">
   <article>
     <header class="post-head">
-      <h1>{title}{draft && <span class="draft-mark"> [draft]</span>}</h1>
-      <p class="byline">
-        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
-        {updatedDate && <> &middot; updated {formatDate(updatedDate)}</>}
-        {tags.length > 0 && (
-          <>
-            {' '}&middot;{' '}
-            {tags.map((tag, i) => (
-              <>
-                {i > 0 && ', '}
-                <a href={href(`/tags/${tag}`)}>{tag}</a>
-              </>
-            ))}
-          </>
-        )}
-      </p>
+      <time class="date" datetime={pubDate.toISOString()}>{formatMonthYear(pubDate)}</time>
+      <h1>{title}{draft && <span class="draft-mark"> draft</span>}</h1>
+      {description && <p class="post-description">{description}</p>}
     </header>
 
     <div class="post-body">
@@ -46,7 +33,15 @@ const coverSize = sizeProperties(coverWidth);
       <slot />
     </div>
 
-    <hr />
+    <footer class="post-foot">
+      {tags.length > 0 && (
+        <p class="post-tags">
+          {tags.map((tag) => <a href={href(`/tags/${tag}`)}>{tag}</a>)}
+        </p>
+      )}
+      {updatedDate && <p class="updated">updated {formatMonthYear(updatedDate)}</p>}
+    </footer>
+
     <nav class="pager">
       {next ? <a href={href(`/${next.id}`)}>&larr; {next.data.title}</a> : <span>&nbsp;</span>}
       {prev ? <a href={href(`/${prev.id}`)}>{prev.data.title} &rarr;</a> : <span>&nbsp;</span>}

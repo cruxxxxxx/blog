@@ -14,3 +14,10 @@ export async function getPublishedPosts(): Promise<Post[]> {
 export function formatDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+/** Two-digit month and year, e.g. "09 26". */
+export function formatMonthYear(date: Date): string {
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const year = String(date.getUTCFullYear()).slice(-2);
+  return `${month} ${year}`;
+}
