@@ -12,8 +12,8 @@
  *   - rewrite the link in the note to the R2 URL and delete the inbox file
  *
  * The repo is public, so the raw file is already in git history by now.
- * Anything that arrived with GPS data or straight-from-camera sized is
- * reported as a privacy issue so the workflow can flag it loudly.
+ * Anything that arrived with GPS or camera metadata (i.e. not cleaned on the
+ * phone first) is reported as a privacy issue so the workflow flags it loudly.
  *
  * Env: R2_KEY, R2_SECRET, R2_ENDPOINT, R2_BUCKET, R2_PUBLIC (only needed when
  * there is something to upload). Flags: --dry-run (no upload, no writes).
@@ -34,7 +34,6 @@ const VIDEO_SCRIPT = join(VAULT_ROOT, 'bin', 'r2-media.sh');
 
 const MAX_PHOTO_WIDTH = 1600;
 const WEBP_QUALITY = 80;
-const MAX_RAW_BYTES = 3 * 1024 * 1024;
 
 const PHOTO_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif', '.tif', '.tiff']);
 const PASSTHROUGH_EXTENSIONS = new Set(['.gif']);
@@ -259,26 +258,27 @@ function requireR2Env() {
 
 // ── privacy ────────────────────────────────────────────────────────────────
 
+// A cleaned photo (Shortcut: convert with "Preserve Metadata" off) carries no
+// EXIF at all, whatever its size. Camera make/model means it skipped that step.
+// Videos aren't run through the Shortcut, so for them only location counts.
 function checkPrivacy(filePath, extension) {
-  const size = statSync(filePath).size;
-  if (size > MAX_RAW_BYTES && !VIDEO_EXTENSIONS.has(extension)) {
-    privacyIssues.push(`${relativeName(filePath)}: ${kilobytes(size)}, looks straight from the camera (run it through the "Blog photo" Shortcut first)`);
-  }
-  if (hasGps(filePath)) {
+  const metadata = readMetadata(filePath);
+  if (metadata.GPSLatitude !== undefined || metadata.GPSCoordinates !== undefined) {
     privacyIssues.push(`${relativeName(filePath)}: has GPS location data`);
+  } else if (!VIDEO_EXTENSIONS.has(extension) && (metadata.Make || metadata.Model)) {
+    privacyIssues.push(`${relativeName(filePath)}: still has camera metadata (${[metadata.Make, metadata.Model].filter(Boolean).join(' ')}), run it through the "Blog photo" Shortcut first`);
   }
 }
 
-function hasGps(filePath) {
+function readMetadata(filePath) {
   try {
-    const output = execFileSync('exiftool', ['-q', '-q', '-n', '-GPSLatitude', '-s3', filePath], { encoding: 'utf8' });
-    return output.trim() !== '';
+    const output = execFileSync('exiftool', ['-j', '-n', '-q', '-q', '-GPSLatitude', '-GPSCoordinates', '-Make', '-Model', filePath], { encoding: 'utf8' });
+    return JSON.parse(output)[0] ?? {};
   } catch (error) {
     if (error.code === 'ENOENT') {
-      console.warn('process-media: exiftool not installed, skipping GPS check');
-      return false;
+      console.warn('process-media: exiftool not installed, skipping privacy check');
     }
-    return false;
+    return {};
   }
 }
 

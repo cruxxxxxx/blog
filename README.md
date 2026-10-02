@@ -125,8 +125,8 @@ iOS, so on the phone media goes through GitHub Actions instead:
 **This repo is public.** The raw file sits in git history even after the
 Action deletes it, so photos must be cleaned *on the phone* before they're
 committed. Use the "Blog photo" Shortcut below. As a backstop, the
-`privacy-check` job goes red (and GitHub emails you) when an inbox file has GPS
-data or is over 3 MB.
+`privacy-check` job goes red (and GitHub emails you) when an inbox file still
+has GPS or camera (make/model) metadata.
 
 ### One-time phone setup
 
@@ -143,21 +143,25 @@ data or is over 3 MB.
      specified below → `Blogs/inbox`
    - Files & links → *Use [[Wikilinks]]* **off**, *New link format* → Relative path
    - Templates → folder `Templates` (for `note.md`)
-   - Git → *Auto commit-and-sync interval* → 1 minute, and *Pull on startup* on
+   - Git → *Auto commit-and-sync interval* → **0** (manual), *Pull on startup* on
+   - Mobile → *Manage toolbar options* → add **Git: Commit-and-sync** for a
+     one-tap publish button
 4. **"Blog photo" Shortcut** (Shortcuts app → new, *Show in Share Sheet*,
    accepts Images):
    1. *Convert* Shortcut Input → **JPEG**, quality 0.85, **Preserve Metadata off**
    2. *Resize Image* → width **1600**, height auto
-   3. *Save File* → Obsidian / `obs` / `Blogs/inbox`, *Ask Where to Save* off,
-      *Overwrite* off
+   3. *Copy to Clipboard*
 
-   Then in a note, link it: `![](inbox/IMG_1234.jpeg)`. Also consider Settings →
-   Privacy → Location Services → Camera → **Never**.
+   Then in the note, long-press → **Paste**: Obsidian saves the image into
+   `Blogs/inbox` (the attachment folder) and inserts the link. (Pasted images
+   become PNGs; that's fine, the Action converts them to WebP.) Also consider
+   Settings → Privacy → Location Services → Camera → **Never**.
 
 ### Live posting
 
-New note from `Templates/note.md` in `Blogs/notes/` → type → add photos with the
-Shortcut → Obsidian Git syncs within a minute → live about 2 minutes later.
+New note from `Templates/note.md` in `Blogs/notes/` → type → share photos to the
+"Blog photo" Shortcut and paste them in → **Git: Commit-and-sync** (toolbar
+button or command palette) → live about 2 minutes later.
 
 ### If a photo slipped through
 
