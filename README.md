@@ -100,6 +100,72 @@ visibly soft on detailed footage.
 
 Drafts render in `npm run dev` and are excluded from the production build.
 
+## Quick notes
+
+A post with no `title` is a note: it shows in the list as date + caption +
+photos, inline, instead of a big title link. Use `Templates/note.md`
+(frontmatter is just `pubDate` with a time, and `draft: false`). Keep them in
+`Blogs/notes/`, named by timestamp, e.g. `2026-10-01-1432.md`.
+
+## Posting from your phone
+
+The desktop plugins (Image Upload Toolkit, Attachment Uploader) can't run on
+iOS, so on the phone media goes through GitHub Actions instead:
+
+1. The note links to raw files in **`Blogs/inbox/`** (tracked by git, unlike
+   `Blogs/assets/`).
+2. On push, the `media` job in `.github/workflows/deploy.yml` runs
+   `bin/process-media.mjs`: photos are rotated, resized to 1600px, converted to
+   WebP with all metadata stripped, and uploaded to R2. Videos go through
+   `bin/r2-media.sh`. The note's links are rewritten to R2 URLs, the inbox files
+   are deleted, and the result is committed back before the build.
+3. R2 credentials are repo secrets (`R2_KEY`, `R2_SECRET`, `R2_ENDPOINT`,
+   `R2_BUCKET`, `R2_PUBLIC`), copied from the Image Upload Toolkit config.
+
+**This repo is public.** The raw file sits in git history even after the
+Action deletes it, so photos must be cleaned *on the phone* before they're
+committed. Use the "Blog photo" Shortcut below. As a backstop, the
+`privacy-check` job goes red (and GitHub emails you) when an inbox file has GPS
+data or is over 3 MB.
+
+### One-time phone setup
+
+1. **Token:** github.com → Settings → Developer settings → Fine-grained tokens →
+   new token, repository access *only* `cruxxxxxx/blog`, permission
+   **Contents: Read and write**.
+2. **Obsidian (iOS):** create an empty vault named `obs`, install the community
+   plugin **Git** (Obsidian Git), then command palette → *Git: Clone an existing
+   remote repo* → `https://github.com/cruxxxxxx/blog.git`, username
+   `cruxxxxxx`, password = the token. Clone into the vault root.
+3. **Obsidian settings on the phone** (`.obsidian/` isn't synced, so set these
+   by hand):
+   - Files & links → *Default location for new attachments* → In the folder
+     specified below → `Blogs/inbox`
+   - Files & links → *Use [[Wikilinks]]* **off**, *New link format* → Relative path
+   - Templates → folder `Templates` (for `note.md`)
+   - Git → *Auto commit-and-sync interval* → 1 minute, and *Pull on startup* on
+4. **"Blog photo" Shortcut** (Shortcuts app → new, *Show in Share Sheet*,
+   accepts Images):
+   1. *Convert* Shortcut Input → **JPEG**, quality 0.85, **Preserve Metadata off**
+   2. *Resize Image* → width **1600**, height auto
+   3. *Save File* → Obsidian / `obs` / `Blogs/inbox`, *Ask Where to Save* off,
+      *Overwrite* off
+
+   Then in a note, link it: `![](inbox/IMG_1234.jpeg)`. Also consider Settings →
+   Privacy → Location Services → Camera → **Never**.
+
+### Live posting
+
+New note from `Templates/note.md` in `Blogs/notes/` → type → add photos with the
+Shortcut → Obsidian Git syncs within a minute → live about 2 minutes later.
+
+### If a photo slipped through
+
+The site is fine (the published copy is stripped), but the raw file is in
+history. Delete it from history with
+`git filter-repo --path Blogs/inbox/<file> --invert-paths`, then
+`git push --force`. Note that anyone may already have cloned it.
+
 ## Frontmatter
 
 ```yaml

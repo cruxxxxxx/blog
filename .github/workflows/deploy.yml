@@ -7,18 +7,74 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
+  # Photos/videos committed from the phone land raw in Blogs/inbox/. Publish
+  # them to R2, rewrite the notes, and commit that back before building.
+  # (A push made with GITHUB_TOKEN does not start another run, so the build
+  # below picks the commit up itself.)
+  media:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      privacy_issues: ${{ steps.process.outputs.privacy_issues }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - id: inbox
+        name: Check the inbox
+        run: |
+          if [ -n "$(find Blogs/inbox -type f ! -name '.*' 2>/dev/null)" ]; then
+            echo "has_media=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.inbox.outputs.has_media == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libimage-exiftool-perl libheif-examples ffmpeg
+          npm ci
+
+      - id: process
+        if: steps.inbox.outputs.has_media == 'true'
+        name: Publish inbox media to R2
+        env:
+          R2_KEY: ${{ secrets.R2_KEY }}
+          R2_SECRET: ${{ secrets.R2_SECRET }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          R2_PUBLIC: ${{ secrets.R2_PUBLIC }}
+        run: node bin/process-media.mjs
+
+      - if: steps.inbox.outputs.has_media == 'true'
+        name: Commit rewritten notes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898499+github-actions[bot]@users.noreply.github.com"
+          git add -A Blogs
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "media: publish inbox uploads to R2"
+          # the phone may have pushed again meanwhile
+          git pull --rebase origin main
+          git push origin HEAD:main
+
   build:
+    needs: media
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main # include the media commit, if any
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -32,9 +88,26 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # The repo is public: a raw photo with GPS or at camera size is now in git
+  # history. The site still deploys, but this goes red (and GitHub emails you).
+  privacy-check:
+    needs: media
+    if: needs.media.outputs.privacy_issues != ''
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          PRIVACY_ISSUES: ${{ needs.media.outputs.privacy_issues }}
+        run: |
+          echo "::error::Raw media with private data reached git history: $PRIVACY_ISSUES"
+          echo "See README > Posting from your phone > If a photo slipped through."
+          exit 1

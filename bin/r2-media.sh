@@ -35,6 +35,13 @@ require_tools() {
 }
 
 load_r2_config() {
+    # CI (bin/process-media.mjs in GitHub Actions) passes these in the
+    # environment; on the Mac they come from the plugin config.
+    if [ -n "${R2_KEY:-}" ] && [ -n "${R2_SECRET:-}" ] && [ -n "${R2_ENDPOINT:-}" ] \
+        && [ -n "${R2_BUCKET:-}" ] && [ -n "${R2_PUBLIC:-}" ]; then
+        R2_PUBLIC="${R2_PUBLIC%/}"
+        return
+    fi
     [ -f "$R2_CONFIG" ] || die "no R2 config at $R2_CONFIG"
     eval "$(python3 - "$R2_CONFIG" <<'PY'
 import json, shlex, sys
@@ -92,6 +99,15 @@ upload() {
             --only-show-errors >&2
 }
 
+# macOS has shasum, the Ubuntu runner has sha256sum.
+sha256() {
+    if command -v sha256sum >/dev/null; then
+        sha256sum "$1"
+    else
+        shasum -a 256 "$1"
+    fi
+}
+
 report_savings() {
     echo "r2-media: $(du -h "$1" | cut -f1) -> $(du -h "$2" | cut -f1)" >&2
 }
@@ -120,7 +136,7 @@ main() {
 
     # Content hash in the name: re-running on the same clip overwrites one key
     # instead of piling up copies, and two clips named IMG_1234 cannot collide.
-    digest="$(shasum -a 256 "$video" | cut -c1-8)"
+    digest="$(sha256 "$video" | cut -c1-8)"
     prefix="blog/$(date +%Y)/$(date +%m)"
     key="$prefix/$slug-$digest.mp4"
     poster_key="$prefix/$slug-$digest-poster.webp"
