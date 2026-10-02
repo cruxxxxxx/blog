@@ -38,21 +38,14 @@ a:hover { text-decoration: underline; }
 /* ── header: small stamped logo, top left ──────────── */
 .masthead {
   display: flex;
-  align-items: flex-end;
-  gap: 1rem;
   margin: 0 0 4.5rem calc(-1 * var(--gutter-left) + 1.25rem);
 }
 .masthead .logo img {
   display: block;
-  height: 44px;
+  height: 56px;
   width: auto;
 }
 .masthead .logo:hover { opacity: .6; }
-.blog-name {
-  font: 1.6rem/1 var(--display);
-  padding-bottom: .1rem;
-}
-.blog-name:hover { text-decoration: none; opacity: .6; }
 
 /* ── lists ─────────────────────────────────────────── */
 .post-list,
@@ -71,6 +64,13 @@ a:hover { text-decoration: underline; }
   font: 2.2rem/1.05 var(--display);
   overflow-wrap: anywhere;
 }
+
+/* quick notes: date, then the whole note inline */
+.post-list .note-entry { margin-bottom: 3.5rem; }
+.note-entry .date { margin-bottom: .75rem; }
+.note-entry .date:hover { text-decoration: underline; }
+.note-body > :first-child { margin-top: 0; }
+.note-body > :last-child { margin-bottom: 0; }
 
 .tag-list li { margin: 0 0 1rem; }
 .count,
@@ -164,7 +164,7 @@ a:hover { text-decoration: underline; }
   :root { --gutter-left: 1rem; }
 
   .masthead { margin-left: 0; margin-bottom: 3.5rem; }
-  .masthead .logo img { height: 36px; }
+  .masthead .logo img { height: 44px; }
   .post-list-title { font-size: 1.9rem; }
   .post-head h1 { font-size: 2.3rem; }
 }

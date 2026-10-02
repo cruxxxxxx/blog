@@ -56,10 +56,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
   <body>
     <header class="masthead">
-      <a class="logo" href="https://hypnotize.works" aria-label="hypnotize.works">
+      <a class="logo" href={href('/')} aria-label="blog home">
         <img src={href('/logo.png')} alt="hypnotize inc." width="400" height="167" />
       </a>
-      <a class="blog-name" href={href('/')}>blog</a>
     </header>
 
     <main>

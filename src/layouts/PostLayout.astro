@@ -1,6 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { formatMonthYear, type Post } from '../lib/posts';
+import { formatMonthYear, formatDayMonthYear, isNote, postLabel, type Post } from '../lib/posts';
 import { href } from '../lib/url';
 import { isVideoUrl, posterUrlFor, previewImageFor, sizeProperties } from '../lib/media.mjs';
 
@@ -16,13 +16,16 @@ const { title, description, pubDate, updatedDate, tags, cover, coverAlt, coverWi
 // A video cover plays in place; og:image and the feed still need a still.
 const coverIsVideo = isVideoUrl(cover);
 const coverSize = sizeProperties(coverWidth);
+const note = isNote(post);
 ---
 
-<BaseLayout title={title} description={description} image={previewImageFor(cover)} type="article">
+<BaseLayout title={postLabel(post)} description={description} image={previewImageFor(cover)} type="article">
   <article>
     <header class="post-head">
-      <time class="date" datetime={pubDate.toISOString()}>{formatMonthYear(pubDate)}</time>
-      <h1>{title}{draft && <span class="draft-mark"> draft</span>}</h1>
+      <time class="date" datetime={pubDate.toISOString()}>
+        {note ? formatDayMonthYear(pubDate) : formatMonthYear(pubDate)}
+      </time>
+      {title && <h1>{title}{draft && <span class="draft-mark"> draft</span>}</h1>}
       {description && <p class="post-description">{description}</p>}
     </header>
 
@@ -43,8 +46,8 @@ const coverSize = sizeProperties(coverWidth);
     </footer>
 
     <nav class="pager">
-      {next ? <a href={href(`/${next.id}`)}>&larr; {next.data.title}</a> : <span>&nbsp;</span>}
-      {prev ? <a href={href(`/${prev.id}`)}>{prev.data.title} &rarr;</a> : <span>&nbsp;</span>}
+      {next ? <a href={href(`/${next.id}`)}>&larr; {postLabel(next)}</a> : <span>&nbsp;</span>}
+      {prev ? <a href={href(`/${prev.id}`)}>{postLabel(prev)} &rarr;</a> : <span>&nbsp;</span>}
     </nav>
   </article>
 </BaseLayout>

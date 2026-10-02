@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import { previewImageFor } from '../lib/media.mjs';
-import { getPublishedPosts } from '../lib/posts';
+import { getPublishedPosts, postLabel } from '../lib/posts';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../site';
 
 export async function GET(context) {
@@ -10,7 +10,7 @@ export async function GET(context) {
     description: SITE_DESCRIPTION,
     site: context.site,
     items: posts.map((post) => ({
-      title: post.data.title,
+      title: postLabel(post),
       description: post.data.description ?? '',
       pubDate: post.data.pubDate,
       categories: post.data.tags,

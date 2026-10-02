@@ -7,7 +7,8 @@ const posts = defineCollection({
   // so Obsidian stays the editing surface.
   loader: glob({ pattern: '**/*.md', base: './Blogs' }),
   schema: z.object({
-    title: z.string(),
+    // No title = a quick note: shown inline in the list, like a status update.
+    title: z.string().optional(),
     description: z.string().optional(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
