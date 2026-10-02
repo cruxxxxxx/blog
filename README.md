@@ -143,7 +143,9 @@ has GPS or camera (make/model) metadata.
      specified below → `Blogs/inbox`
    - Files & links → *Use [[Wikilinks]]* **off**, *New link format* → Relative path
    - Templates → folder `Templates` (for `note.md`)
-   - Git → *Auto commit-and-sync interval* → 1 minute, and *Pull on startup* on
+   - Git → *Auto commit-and-sync interval* → **0** (manual), *Pull on startup* on
+   - Mobile → *Manage toolbar options* → add **Git: Commit-and-sync** for a
+     one-tap publish button
 4. **"Blog photo" Shortcut** (Shortcuts app → new, *Show in Share Sheet*,
    accepts Images):
    1. *Convert* Shortcut Input → **JPEG**, quality 0.85, **Preserve Metadata off**
@@ -157,8 +159,9 @@ has GPS or camera (make/model) metadata.
 
 ### Live posting
 
-New note from `Templates/note.md` in `Blogs/notes/` → type → add photos with the
-Shortcut → Obsidian Git syncs within a minute → live about 2 minutes later.
+New note from `Templates/note.md` in `Blogs/notes/` → type → share photos to the
+"Blog photo" Shortcut and paste them in → **Git: Commit-and-sync** (toolbar
+button or command palette) → live about 2 minutes later.
 
 ### If a photo slipped through
 
