@@ -4,4 +4,4 @@ draft: true
 ---
 pipeline test
 
-![](../inbox/pipeline-test.jpeg)
+![](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/10/pipeline-test-698b4e87.webp)
