@@ -12,7 +12,6 @@
   --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --display: 'arrayregular', var(--sans);
   --column: 34rem;
-  --gutter-left: 4.5rem;
   color-scheme: light;
 }
 
@@ -20,25 +19,30 @@
 
 body {
   margin: 0;
-  padding: 1.25rem 1rem 5rem var(--gutter-left);
+  padding: 1.25rem 1rem 5rem;
   background: var(--bg);
   color: var(--fg);
   font: 13px/1.6 var(--sans);
   -webkit-font-smoothing: antialiased;
 }
 
+/* one centred column, like hypnotize.works; text inside stays left-aligned */
+.masthead,
 main,
 .site-foot {
   max-width: var(--column);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 a { color: inherit; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* ── header: small stamped logo, top left ──────────── */
+/* ── header: stamped logo, centred over the column ── */
 .masthead {
   display: flex;
-  margin: 0 0 4.5rem calc(-1 * var(--gutter-left) + 1.25rem);
+  justify-content: center;
+  margin-bottom: 4.5rem;
 }
 .masthead .logo img {
   display: block;
@@ -161,9 +165,7 @@ a:hover { text-decoration: underline; }
 
 /* ── phones ────────────────────────────────────────── */
 @media (max-width: 640px) {
-  :root { --gutter-left: 1rem; }
-
-  .masthead { margin-left: 0; margin-bottom: 3.5rem; }
+  .masthead { margin-bottom: 3.5rem; }
   .masthead .logo img { height: 44px; }
   .post-list-title { font-size: 1.9rem; }
   .post-head h1 { font-size: 2.3rem; }
