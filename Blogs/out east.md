@@ -10,3 +10,4 @@ coverWidth:
 ---
 ![out east 1791204576266](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/10/out%20east-1791204576266.webp)
 ![out east 1791204494990](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/10/out%20east-1791204494990.webp)![out east 1791204543635](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/10/out%20east-1791204543635.webp)
+![](inbox/Pasted%20image%2020261005095554.jpg)
