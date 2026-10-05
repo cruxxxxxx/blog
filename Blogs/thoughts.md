@@ -3,7 +3,7 @@ title: thoughts
 description: ""
 pubDate: 2026-10-01
 tags: []
-draft: false
+draft: true
 cover:
 coverAlt: ""
 coverWidth:
