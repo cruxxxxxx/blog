@@ -45,13 +45,11 @@ a:hover { text-decoration: underline; }
   gap: 1rem;
   margin-bottom: 4.5rem;
 }
-.masthead-right { text-align: right; }
 .masthead .back {
   font-size: 1.5rem;
   line-height: 1;
 }
-.masthead .back:hover,
-.masthead-right a:hover { text-decoration: none; opacity: .6; }
+.masthead .back:hover { text-decoration: none; opacity: .6; }
 .masthead .logo img {
   display: block;
   height: 56px;

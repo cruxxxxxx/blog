@@ -58,14 +58,15 @@ const isBlogHome = Astro.url.pathname.replace(/\/$/, '') === href('/').replace(/
   <body>
     <header class="masthead">
       <span class="masthead-side">
-        {!isBlogHome && <a class="back" href={href('/')} aria-label="back to the blog">&larr;</a>}
+        {/* ← climbs one level: post → blog list → hypnotize.works */}
+        {isBlogHome
+          ? <a class="back" href="https://hypnotize.works" aria-label="back to hypnotize.works">&larr;</a>
+          : <a class="back" href={href('/')} aria-label="back to the blog">&larr;</a>}
       </span>
-      <a class="logo" href={href('/')} aria-label="blog home">
+      <a class="logo" href="https://hypnotize.works" aria-label="hypnotize.works">
         <img src={href('/logo.png')} alt="hypnotize inc." width="400" height="167" />
       </a>
-      <span class="masthead-side masthead-right">
-        <a href="https://hypnotize.works">hypnotize.works</a>
-      </span>
+      <span class="masthead-side"></span>
     </header>
 
     <main>
