@@ -19,6 +19,7 @@ const {
 
 const pageTitle = title ? `${title} — ${SITE_TITLE}` : SITE_TITLE;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const isBlogHome = Astro.url.pathname.replace(/\/$/, '') === href('/').replace(/\/$/, '');
 ---
 
 <html lang="en">
@@ -56,19 +57,49 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
   <body>
     <header class="masthead">
+      <span class="masthead-side">
+        {!isBlogHome && <a class="back" href={href('/')} aria-label="back to the blog">&larr;</a>}
+      </span>
       <a class="logo" href={href('/')} aria-label="blog home">
         <img src={href('/logo.png')} alt="hypnotize inc." width="400" height="167" />
       </a>
+      <span class="masthead-side masthead-right">
+        <a href="https://hypnotize.works">hypnotize.works</a>
+      </span>
     </header>
 
     <main>
       <slot />
     </main>
 
-    <footer class="site-foot">
-      <a href="https://hypnotize.works">hypnotize.works</a>
-      <a href={href('/tags')}>tags</a>
-      <a href={href('/rss.xml')}>rss</a>
-    </footer>
+    {/* click a photo to see it large; Escape, a click or a tap closes it */}
+    <dialog class="lightbox" aria-label="enlarged photo">
+      <img alt="" />
+    </dialog>
+
+    <script is:inline>
+      (function () {
+        var lightbox = document.querySelector('.lightbox');
+        var enlarged = lightbox.querySelector('img');
+
+        document.addEventListener('click', function (event) {
+          var photo = event.target.closest('.post-body img');
+          if (!photo || photo.closest('a')) {
+            return;
+          }
+          enlarged.src = photo.currentSrc || photo.src;
+          enlarged.alt = photo.alt;
+          lightbox.showModal();
+        });
+
+        lightbox.addEventListener('click', function () {
+          lightbox.close();
+        });
+
+        lightbox.addEventListener('close', function () {
+          enlarged.removeAttribute('src');
+        });
+      })();
+    </script>
   </body>
 </html>

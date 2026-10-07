@@ -28,8 +28,7 @@ body {
 
 /* one centred column, like hypnotize.works; text inside stays left-aligned */
 .masthead,
-main,
-.site-foot {
+main {
   max-width: var(--column);
   margin-left: auto;
   margin-right: auto;
@@ -38,12 +37,21 @@ main,
 a { color: inherit; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* ── header: stamped logo, centred over the column ── */
+/* ── header: ← back · stamped logo · hypnotize.works ── */
 .masthead {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 4.5rem;
 }
+.masthead-right { text-align: right; }
+.masthead .back {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.masthead .back:hover,
+.masthead-right a:hover { text-decoration: none; opacity: .6; }
 .masthead .logo img {
   display: block;
   height: 56px;
@@ -155,12 +163,32 @@ a:hover { text-decoration: underline; }
   margin-top: 3rem;
 }
 
-/* ── footer ────────────────────────────────────────── */
-.site-foot {
+/* ── lightbox ──────────────────────────────────────── */
+.post-body img { cursor: zoom-in; }
+.post-body a img { cursor: pointer; }
+
+.lightbox {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-out;
+}
+.lightbox[open] {
   display: flex;
-  gap: 1.25rem;
-  margin-top: 6rem;
-  color: var(--muted);
+  align-items: center;
+  justify-content: center;
+}
+.lightbox::backdrop { background: rgba(255, 255, 255, .96); }
+.lightbox img {
+  display: block;
+  max-width: 94vw;
+  max-height: 92vh;
+  object-fit: contain;
 }
 
 /* ── phones ────────────────────────────────────────── */
