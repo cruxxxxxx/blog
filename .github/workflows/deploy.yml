@@ -1,5 +1,9 @@
-name: Deploy to GitHub Pages
+name: Publish media and rebuild hypnotize.works
 
+# This repo is content only (the Obsidian vault). The site itself is built
+# and deployed from cruxxxxxx/cruxxxxxx.github.io, which checks these posts
+# out at build time. On push: publish phone media to R2, then ask the site to
+# rebuild.
 on:
   push:
     branches: [main]
@@ -9,14 +13,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: publish
   cancel-in-progress: true
 
 jobs:
   # Photos/videos committed from the phone land raw in Blogs/inbox/. Publish
-  # them to R2, rewrite the notes, and commit that back before building.
-  # (A push made with GITHUB_TOKEN does not start another run, so the build
-  # below picks the commit up itself.)
+  # them to R2, rewrite the notes, and commit that back before the site
+  # rebuilds. (A push made with GITHUB_TOKEN does not start another run; the
+  # site's build checks out main afterwards, so it gets the rewritten notes.)
   media:
     runs-on: ubuntu-latest
     permissions:
@@ -68,38 +72,18 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
 
-  build:
+  # Rebuild the site with the new posts (after the media commit, if any).
+  notify-site:
     needs: media
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main # include the media commit, if any
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+      - name: Ask hypnotize.works to rebuild
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+        run: gh api repos/cruxxxxxx/cruxxxxxx.github.io/dispatches -f event_type=blog-updated
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-
-  # The repo is public: a raw photo with GPS or at camera size is now in git
-  # history. The site still deploys, but this goes red (and GitHub emails you).
+  # The repo is public: a raw photo with GPS or camera metadata is now in git
+  # history. The site still rebuilds, but this goes red (and GitHub emails you).
   privacy-check:
     needs: media
     if: needs.media.outputs.privacy_issues != ''
