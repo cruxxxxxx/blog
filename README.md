@@ -14,6 +14,18 @@ plan to set this up on another machine.
 
 ## Publishing a post
 
+**Publish Post: Publish** in the command palette (or the rocket in the ribbon)
+does steps 3–5 below on the open note, then checks the push landed. It stops
+before committing if any local media is left. Like Commit-and-sync, it commits
+every changed file in the vault. The plugin is tracked in
+`obsidian-plugins/publish-post/`; on a new machine, link and enable it:
+
+```
+ln -sfn ../../obsidian-plugins/publish-post .obsidian/plugins/publish-post
+```
+
+By hand:
+
 1. **Write** — new note in `Blogs/`. Use `Templates/post.md` for frontmatter.
 2. **Photos** — paste into the note. They land in `Blogs/assets/`.
 3. **Upload** — command palette → **Publish Page** (Image Upload Toolkit).

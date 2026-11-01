@@ -1,0 +1,9 @@
+{
+  "id": "publish-post",
+  "name": "Publish Post",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Upload a note's images and videos to R2, then commit and push it.",
+  "author": "crux",
+  "isDesktopOnly": true
+}

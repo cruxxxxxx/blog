@@ -27,4 +27,9 @@ another one in the books, thanks everyone for rockin with me
 
 ![halloween stream 2026 1793552034783](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/11/halloween%20stream%202026-1793552034783.webp)
 
-![halloween stream 2026 1793552034787](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/11/halloween%20stream%202026-1793552034787.webp)
+![halloween stream 2026 1793552034787|610x457](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/11/halloween%20stream%202026-1793552034787.webp)
+
+![halloween stream 2026 1793553361142](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/11/halloween%20stream%202026-1793553361142.webp)
+
+![halloween stream 2026 1793553367038](https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/11/halloween%20stream%202026-1793553367038.webp)
+
