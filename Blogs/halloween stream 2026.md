@@ -8,7 +8,7 @@ cover:
 coverAlt: ""
 coverWidth:
 ---
-another one in the books, thanks everyone for rockin with me
+another one in the books, i can't believe we've done this for 4 times now. that means 96 hours of halloween, all fresh shit.. crazy. thanks to everyone who hung out, i hope you found a new favorite. see you next year, freaks. 
 
 <video src="https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/11/commercial-ed9ace4f.mp4" poster="https://pub-be6ccf62868a47c8a1914a722f1b27fc.r2.dev/blog/2026/11/commercial-ed9ace4f-poster.webp" controls preload="none" playsinline></video>
 
